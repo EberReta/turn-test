@@ -1,0 +1,36 @@
+stages:
+  - testing
+  
+variables:
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_USER: myuser
+  MYSQL_PASSWORD: mypassword
+  MYSQL_DATABASE: mydatabase
+  DB_HOST: mysql
+  DB_PASSWORD: mypassword
+
+cache:
+  key: $CI_BUILD_REF_NAM
+
+composer:
+  stage: testing
+  services:
+    - mysql:8.0
+  image: edbizarro/gitlab-ci-pipeline-php:7.4-alpine
+  script:
+    - php -v
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - cp .env.testing .env
+    - php artisan key:generate
+    - php artisan migrate:fresh --seed
+    - sudo cp /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.bak
+    - echo "" | sudo tee /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    - ./vendor/phpunit/phpunit/phpunit --version
+    - php -d short_open_tag=off ./vendor/phpunit/phpunit/phpunit -v --colors=never --stderr
+    - sudo cp /usr/local/etc/php/conf.d/docker-php-ext-xdebug.bak /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+  artifacts:
+    paths:
+      - ./storage/logs # for debugging
+      - .env
+    expire_in: 1 days
+    when: on_failure
