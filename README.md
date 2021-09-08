@@ -7,3 +7,13 @@
 - Auth
 - Vue
 - Axios
+
+<p>Ejecute this commands to run the proyect:</p>
+
+```
+composer install
+cp .env.example .env
+php artisan key:generate
+npm install 
+npm run dev
+```
