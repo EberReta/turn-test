@@ -23,11 +23,20 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'name'=> $this->faker->name,
+            'lastName' => $this->faker->lastName,
+            'company'=> $this->faker->company,
+            'email'=> $this->faker->unique()->safeEmail,
+            'password'=>bcrypt("123123123"),
+            'phone'=> $this->faker->phoneNumber,
+            'discount'=> $this->faker->randomDigit,
+            'businessName'=> $this->faker->company,
+            'cfdi'=> $this->faker->randomElement(['Uso general', 'Gastos en general', 'Adquisición de mercancias']),
+            'rfc'=> $this->faker->randomElement(['REBE961025HZ4', 'MAYO951232D24', 'GOME951232D24', 'GOME951232D24']),
+            'type'=> $this->faker->randomElement(['Fisico', 'Moral']),
+            'location'=> $this->faker->randomElement(['Bodega GDL','Bodega CDMX','Tienda']),
+            'role'=> $this->faker->randomElement(['Administrador','Vendedor','Mayorista','Coordinador de Almacen','Encargado de Facturacion']),
+            'status'=>1,
         ];
     }
 

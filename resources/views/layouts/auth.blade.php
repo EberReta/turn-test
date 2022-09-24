@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,24 +17,18 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <script src="https://kit.fontawesome.com/176ccc28dd.js" crossorigin="anonymous"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
 </head>
-
 <body>
     <div id="app">
         @include('layouts.header')
-        @include('layouts.sidebar' )
 
-        <div style="margin-left: 180px; " class="bg-light">
-            <div class="p-4" id="app">
-                @yield('content')
-            </div>
-        </div>
+        <main class="py-4">
+            @yield('content')
+        </main>
     </div>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     @yield('scripts')
 </body>
-
 </html>
